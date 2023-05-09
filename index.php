@@ -1,16 +1,24 @@
 <?php
 
+require 'getTasks.php';
+require 'addTask.php';
+
 header('Content-type: json/application');
 $connect = mysqli_connect('localhost', 'root', '', 'toDoList');
 
-$tasks = mysqli_query($connect, 'SELECT * FROM `tasks`');
+$route = $_GET['q'];
 
-$taskList = [];
+$requestMethod = $_SERVER['REQUEST_METHOD'];
 
-while($task = mysqli_fetch_assoc($tasks)) {
-  $taskList[] = $task;
+if($requestMethod === 'GET') {
+  if($route === 'tasks') {
+    getTasks($connect);
+  }
+} elseif($requestMethod === 'POST') {
+  if($route === 'tasks') {
+    addTask($connect, $_POST);
+  }
+  
 }
-
-echo json_encode($taskList);
 
 ?>
