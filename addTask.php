@@ -2,8 +2,8 @@
 
 function addTask($connect, $data) {
     $data = file_get_contents('php://input');
-    $data = json_decode($data);
-    $task = $data->task;
+    $data = json_decode($data, true);
+    $task = $data['task'];
 
     mysqli_query($connect, "INSERT INTO `tasks` (`id`, `task`) VALUES (NULL, '$task')");
     
